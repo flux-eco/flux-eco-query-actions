@@ -1,0 +1,183 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://fluxlabs.ch/flux-eco/flux-eco-query-actions-schema.json",
+  "$defs": {
+    "server": {
+      "type": "object",
+      "properties": {
+        "port": {
+          "type": "string"
+        },
+        "host": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "port",
+        "host"
+      ]
+    },
+    "required": [
+      "server"
+    ],
+    "actions": {
+      "queryMysqlDataSource": {
+        "type": "object",
+        "properties": {
+          "actionName": {
+            "type": "string",
+            "const": "queryMysqlDataSource"
+          },
+          "actionParameters": {
+            "type": "object",
+            "properties": {
+              "tableName": {
+                "type": "string"
+              },
+              "joins": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/valueObjects/Join"
+                    }
+                  }
+                ]
+              },
+              "queryOptions": {
+                "$ref": "#/$defs/valueObjects/QueryOptions"
+              }
+            },
+            "required": [
+              "tableName",
+              "queryOptions"
+            ]
+          }
+        },
+        "required": [
+          "actionName",
+          "actionParameters"
+        ]
+      }
+    },
+    "valueObjects": {
+      "Join": {
+        "type": "object",
+        "properties": {
+          "tableName": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "condition": {
+            "$ref": "#/$defs/valueObjects/JoinCondition"
+          }
+        },
+        "required": [
+          "tableName",
+          "type",
+          "condition"
+        ]
+      },
+      "JoinCondition": {
+        "type": "object",
+        "properties": {
+          "leftTableField": {
+            "type": "string"
+          },
+          "rightTableField": {
+            "type": "string"
+          },
+          "operator": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "leftTableField",
+          "rightTableField",
+          "operator"
+        ]
+      },
+      "QueryOptions": {
+        "type": "object",
+        "properties": {
+          "responseTemplate": {
+            "$ref": "#/$defs/valueObjects/ResponseTemplate"
+          },
+          "sortDefinition": {
+            "$ref": "#/$defs/valueObjects/SortDefinition"
+          },
+          "filterSchema": {
+            "$ref": "#/$defs/valueObjects/FilterSchema"
+          }
+        },
+        "required": [
+          "responseTemplate"
+        ]
+      },
+      "ResponseTemplate": {
+        "type": "object",
+        "description": "the keys of the result to map",
+        "properties": {
+          "parent": {
+            "type": [
+              "string",
+              null
+            ]
+          },
+          "id": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "additionalProperties": "true"
+          }
+        },
+        "required": [
+          "parent",
+          "id",
+          "data"
+        ]
+      },
+      "SortDefinition": {
+        "type": "object",
+        "properties": {
+          "field": {
+            "type": "string"
+          },
+          "direction": {
+            "enum": [
+              "ASC",
+              "DESC"
+            ]
+          }
+        },
+        "required": [
+          "field",
+          "direction"
+        ]
+      },
+      "FilterSchema": {
+        "type": "object",
+        "properties": {
+          "field": {
+            "type": "string"
+          },
+          "operator": {
+            "type": "string"
+          },
+          "value": {}
+        },
+        "required": [
+          "field",
+          "operator",
+          "value"
+        ]
+      }
+    }
+  }
+}
