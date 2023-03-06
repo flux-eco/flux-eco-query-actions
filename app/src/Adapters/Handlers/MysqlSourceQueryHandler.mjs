@@ -65,7 +65,7 @@ export class MysqlSourceQueryHandler {
             });
         }
 
-        query += " where (type = 'crs' or type = 'cat') and deleted is null ORDER BY path LIMIT 800;"; //todo
+        query += " where (type = 'crs' or type = 'cat') and deleted is null ORDER BY path LIMIT 250;"; //todo
 
         const [rows] = await this.pool.query(query);
         return rows;
