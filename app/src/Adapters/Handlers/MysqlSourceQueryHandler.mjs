@@ -59,6 +59,10 @@ export class MysqlSourceQueryHandler {
                 query += ` ${join.type} ${join.tableName} ON ${join.condition.leftTableField} ${join.condition.operator} ${join.condition.rightTableField}`;
             });
         }
+
+        //todo
+        query += " where (type = 'crs' or type = 'cat')";
+
         const [rows] = await this.pool.query(query);
         resolve_promise(rows);
         return promise;

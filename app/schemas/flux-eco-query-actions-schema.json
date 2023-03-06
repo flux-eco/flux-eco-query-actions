@@ -123,13 +123,13 @@
         "type": "object",
         "description": "the keys of the result to map",
         "properties": {
-          "parent": {
+          "parent_id": {
             "type": [
               "string",
               null
             ]
           },
-          "id": {
+          "node_id": {
             "type": "string"
           },
           "data": {

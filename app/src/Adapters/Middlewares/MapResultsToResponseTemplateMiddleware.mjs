@@ -78,9 +78,13 @@ export class MapResultsToResponseTemplateMiddleware {
      */
     process(results, next) {
 
+        //TODO
         const mapResultsToTemplate = function mapResultsToTemplate(data, template, mapResultToTemplate) {
             return data.map((result) => {
                 const resObj = JSON.parse(JSON.stringify(result))
+
+
+
                 const mappedResult = mapResultToTemplate(resObj, template, {});
                 return Object.assign({}, template, mappedResult);
             });
@@ -91,10 +95,15 @@ export class MapResultsToResponseTemplateMiddleware {
             for (let i = 0; i < keys.length; i++) {
                 const key = keys[i];
                 const value = template[key];
-                if (key === "parent") {
-                    const parent = result[value];
-                    mapped[key] = parent ? { label: parent } : null;
-                } else if (key === "id") {
+                if (key === "parent_id") {
+                    console.log(result)
+                    mapped[key] = result['parent'];
+
+                    if(result['parent'] === 1) {
+                        mapped[key]  = null;
+                    }
+
+                } else if (key === "node_id") {
                     mapped[key] = result[value];
                 } else if (key === "data") {
                     mapped[key] = {};
@@ -110,9 +119,9 @@ export class MapResultsToResponseTemplateMiddleware {
         };
 
         const mappedData = mapResultsToTemplate(results, this.queryOptions.responseTemplate, mapResultToTemplate);
-console.log(JSON.stringify(mappedData));
+        return next(mappedData); //todo
 
-
+        /*
         try {
             const mappedResults = mapResultsToTemplate(
                 results,
@@ -124,6 +133,6 @@ console.log(JSON.stringify(mappedData));
             console.error(error);
             // or call onFailure function
             // this.#onFailure(error);
-        }
+        }*/
     }
 }
