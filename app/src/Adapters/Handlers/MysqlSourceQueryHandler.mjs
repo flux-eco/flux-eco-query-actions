@@ -47,11 +47,16 @@ export class MysqlSourceQueryHandler {
      * @return {Promise<Array>} - A Promise that resolves to an array of results.
      */
     async handle(tableName, joins) {
-        let resolve_promise, reject_promise;
-        const promise = new Promise((resolve, reject) => {
-            resolve_promise = resolve;
-            reject_promise = reject;
-        });
+        /* let resolve_promise, reject_promise;
+         const promise = new Promise((resolve, reject) => {
+             resolve_promise = resolve;
+             reject_promise = reject;
+         });
+
+
+         const [rows] = await this.pool.query(query);
+         resolve_promise(rows);
+         return promise;*/
 
         let query = `SELECT * FROM ${tableName}`;
         if (joins && joins.length > 0) {
@@ -60,13 +65,13 @@ export class MysqlSourceQueryHandler {
             });
         }
 
-        //todo
-        query += " where (type = 'crs' or type = 'cat')";
+        query += " where (type = 'crs' or type = 'cat') and deleted is null";
 
         const [rows] = await this.pool.query(query);
-        resolve_promise(rows);
-        return promise;
+        return rows;
+
     }
+
 
     #assertQueringTableAllowed(tableName, reject_promise) {
         if (!this.#config.allowedSourceData.prototype.hasOwnProperty(tableName)) {

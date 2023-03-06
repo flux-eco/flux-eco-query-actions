@@ -95,7 +95,7 @@ export class MapResultsToResponseTemplateMiddleware {
             for (let i = 0; i < keys.length; i++) {
                 const key = keys[i];
                 const value = template[key];
-                if (key === "parent_id") {
+                if (key === "parentId") {
                     console.log(result)
                     mapped[key] = result['parent'];
 
@@ -103,9 +103,9 @@ export class MapResultsToResponseTemplateMiddleware {
                         mapped[key]  = null;
                     }
 
-                } else if (key === "node_id") {
+                } else if (key === "nodeId") {
                     mapped[key] = result[value];
-                } else if (key === "data") {
+                } else if (key === "nodeData") {
                     mapped[key] = {};
                     const dataKeys = Object.keys(value);
                     for (let j = 0; j < dataKeys.length; j++) {
