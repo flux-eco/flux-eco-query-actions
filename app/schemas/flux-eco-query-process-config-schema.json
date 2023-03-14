@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://fluxlabs.ch/flux-eco/flux-eco-query-process-config-schema.json",
+  "type": "object",
+  "properties": {
+    "settings": {
+      "$ref": "./flux-eco-query-process-settings-schema.json"
+    },
+    "state": {
+      "additionalProperties": {
+        "$ref": "./flux-eco-query-process-state-schema.json"
+      }
+    }
+  },
+  "required": [
+    "settings",
+    "state"
+  ]
+}

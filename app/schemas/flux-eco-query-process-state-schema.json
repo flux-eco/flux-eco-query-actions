@@ -1,0 +1,302 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://fluxlabs.ch/flux-eco/flux-eco-query-process-state.json",
+  "title": "FluxEcoQueryProcessState",
+  "type": "object",
+  "properties": {
+    "queryDefinition": {
+      "$ref": "#/$defs/queryDefinition"
+    },
+    "transformationDefintions": {
+      "$ref": "#/$defs/transformationDefinitions"
+    }
+  },
+  "required": [
+    "queryDefinition",
+    "transformationDefintions"
+  ],
+  "$defs": {
+    "queryDefinition": {
+      "type": "object",
+      "properties": {
+        "tableName": {
+          "type": "string"
+        },
+        "joins": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/join"
+              }
+            }
+          ]
+        },
+        "where": {
+          "$ref": "#/$defs/whereClause"
+        },
+        "orderBy": {
+          "$ref": "#/$defs/orderBy"
+        }
+      },
+      "required": [
+        "tableName"
+      ]
+    },
+    "join": {
+      "type": "object",
+      "properties": {
+        "tableName": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "condition": {
+          "$ref": "#/$defs/joinCondition"
+        }
+      },
+      "required": [
+        "tableName",
+        "type",
+        "condition"
+      ]
+    },
+    "joinCondition": {
+      "type": "object",
+      "properties": {
+        "leftTableField": {
+          "type": "string"
+        },
+        "rightTableField": {
+          "type": "string"
+        },
+        "operator": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "leftTableField",
+        "rightTableField",
+        "operator"
+      ]
+    },
+    "whereClause": {
+      "type": "object",
+      "properties": {
+        "operator": {
+          "type": "string"
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/condition"
+          }
+        }
+      },
+      "required": [
+        "operator",
+        "conditions"
+      ]
+    },
+    "condition": {
+      "type": "object",
+      "properties": {
+        "column": {
+          "type": "string"
+        },
+        "operator": {
+          "type": "string"
+        },
+        "value": {}
+      },
+      "required": [
+        "column",
+        "operator",
+        "value"
+      ]
+    },
+    "orderBy": {
+      "type": "object",
+      "properties": {
+        "column": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        "asc": {
+          "type": "string",
+          "enum": [
+            "ASC"
+          ]
+        },
+        "desc": {
+          "type": "string",
+          "enum": [
+            "DESC"
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "asc"
+          ]
+        },
+        {
+          "required": [
+            "        "
+            desc
+            "
+          ]
+        }
+      ]
+    },
+    "transformationDefinitions": {
+      "type": "object",
+      "properties": {
+        "mapToTreeSettings": {
+          "$ref": "#/$defs/mapToTreeSettings"
+        },
+        "createRootNodeFromMappedNodesSettings": {
+          "$ref": "#/$defs/createRootNodeFromMappedNodesSettings"
+        },
+        "filterTreeForASpecificLeafSettings": {
+          "$ref": "#/$defs/filterTreeForASpecificLeafSettings"
+        }
+      },
+      "required": [
+        "mapToTreeSettings",
+        "createRootNodeFromMappedNodesSettings",
+        "filterTreeForASpecificLeafSettings"
+      ]
+    },
+    "mapToTreeSettings": {
+      "type": "object",
+      "properties": {
+        "fieldNameNodeId": {
+          "type": "string"
+        },
+        "fieldNameParentId": {
+          "type": "string"
+        },
+        "expandedPerDefault": {
+          "type": "boolean"
+        },
+        "mapDataSettings": {
+          "$ref": "#/$defs/mapDataSettings"
+        },
+        "fieldNamePosition": {
+          "type": "string"
+        },
+        "fieldNameType": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "fieldNameNodeId",
+        "fieldNameParentId",
+        "expandedPerDefault",
+        "mapDataSettings",
+        "fieldNamePosition",
+        "fieldNameType"
+      ]
+    },
+    "mapDataSettings": {
+      "type": "object",
+      "properties": {
+        "fieldNameLabel": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "fieldNameLabel"
+      ]
+    },
+    "createRootNodeFromMappedNodesSettings": {
+      "type": "object",
+      "properties": {
+        "usePositionAsChildPropertyKey": {
+          "type": "boolean"
+        }
+      }
+    },
+    "filterTreeForASpecificLeafSettings": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    "sortConfiguration": {
+      "type": "object",
+      "properties": {
+        "field": {
+          "type": "string"
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "ASC",
+            "DESC"
+          ]
+        }
+      },
+      "required": [
+        "field",
+        "direction"
+      ]
+    },
+    "sortDefinition": {
+      "type": "object",
+      "properties": {
+        "field": {
+          "type": "string"
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "ASC",
+            "DESC"
+          ]
+        }
+      },
+      "required": [
+        "field"
+      ],
+      "default": {
+        "direction": "ASC"
+      }
+    },
+    "filterSchema": {
+      "type": "object",
+      "properties": {
+        "field": {
+          "type": "string"
+        },
+        "operator": {
+          "type": "string"
+        },
+        "value": {}
+      },
+      "required": [
+        "field",
+        "operator",
+        "value"
+      ]
+    }
+  }
+}

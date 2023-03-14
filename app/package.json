@@ -1,0 +1,7 @@
+{
+  "name": "flux-eco-query-actions",
+  "version": "1.0.0",
+  "dependencies": {
+    "mysql2": "^2.3.0"
+  }
+}
